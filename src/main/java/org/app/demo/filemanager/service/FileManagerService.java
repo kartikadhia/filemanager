@@ -1,6 +1,7 @@
 package org.app.demo.filemanager.service;
 
 import org.app.demo.filemanager.data.Directory;
+import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
 import org.app.demo.filemanager.utility.FolderManager;
 
 
@@ -13,8 +14,7 @@ public class FileManagerService {
 	
 	FolderManager folderManager = new FolderManager();
 	
-	public Directory getFilesAtPath(String path ) {
-		
+	public Directory getFilesAtPath(String path ) throws InvalidOrEmptyPathException {
 		return folderManager.processFilesForPath(path);
 	}
 	

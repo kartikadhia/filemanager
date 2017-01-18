@@ -52,6 +52,7 @@ public class CustomFile implements Serializable{
 	public void setWordCount(ConcurrentHashMap<String, Integer> wordCount) {
 		this.wordCount = wordCount;
 	}
+	
 	public String getErrorString() {
 		return errorString;
 	}
