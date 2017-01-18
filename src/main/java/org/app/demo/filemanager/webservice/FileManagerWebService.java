@@ -1,6 +1,8 @@
 package org.app.demo.filemanager.webservice;
 
 
+import java.io.File;
+
 import javax.ws.rs.GET;
 
 import javax.ws.rs.Path;
@@ -36,20 +38,14 @@ public class FileManagerWebService {
 			long startTime = System.currentTimeMillis();
 			logger.info("Received request for path " + path);
 			//Get the information of the folder and the files
-			
 			Directory directory =   fileManagerService.getFilesAtPath(path);
-			
 			long stopTime = System.currentTimeMillis();
 		    long elapsedTime = stopTime - startTime;
 		    logger.info("Request served in "+ elapsedTime + "ms");
-		    if(directory == null) {    //the folder does not have any relevant files, send an empty response
-		    	Directory emptyDirectory = new Directory();
-		    	return Response.status(Status.OK).entity(emptyDirectory).build();
-		    }
 		    return Response.status(Status.OK).entity(directory).build();
 			}
 		catch(InvalidOrEmptyPathException e ) {
-			return Response.status(Status.BAD_REQUEST).build();
+			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
 }

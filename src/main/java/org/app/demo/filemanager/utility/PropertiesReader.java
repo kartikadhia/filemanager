@@ -25,7 +25,7 @@ public class PropertiesReader {
 	public PropertiesReader () {}
 	
 	public PropertiesReader(FolderManager folderManager) {
-		try(InputStream input = new FileInputStream("/config.properties");) {
+		try(InputStream input = this.getClass().getClassLoader().getResourceAsStream("config.properties");)	{
 			properties.load(input);
 			folderManager.setFileExtention(properties.getProperty("file_extention",".txt"));
 			folderManager.setThresholdForLongFile(

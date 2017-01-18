@@ -1,9 +1,13 @@
 package org.app.demo.filemanager.data;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
+import org.app.demo.filemanager.calculator.CustomFileThread;
 
+/**
+ *  @author Kartik
+ *  This class helps create directories and files by using recursion
+ *  It also loads the count and total number of files present in the directory.
+ */
 public class DirectoryHelper {
 	private Directory directory = new Directory();
 	private static String fileExtention;
@@ -40,6 +44,8 @@ public class DirectoryHelper {
 						DirectoryHelper subDirectoryHelper = new DirectoryHelper(child,directory.getDepth()+1);
 						subDirectoryHelper.processAllChildren(subPath);
 						
+						// if subdirectory is relevant (not null) add it to the subdirectory list
+						if(subDirectoryHelper.getDirectory() != null)
 						directory.getSubDirectoryList().add(subDirectoryHelper.getDirectory());
 						
 					}
@@ -48,21 +54,33 @@ public class DirectoryHelper {
 						CustomFileThread customFileThread = new CustomFileThread(customFile,
 																directory.getLongFilesList(),directory.getShortFilesList());
 						customFileThread.processFile();
+						// if the directory has files, set it as relevant (to be sent)
 						directory.setRelevant(true);
+						//increase the file count
 						directory.setFileCount((directory.getFileCount()+1));
+						// increase the word count
+						directory.setTotalWords(directory.getTotalWords() + customFile.getTotalWords());
 					}
 				}
 				catch(Exception e) {
 					directory.setErrorString("there was an error accessing this directory. the user running this"
-					+ " process may not have the permissions to access this directory");
+					+ " process may not have the permissions to access all the subfiles of this directory");
 				}
 			}
+		/** 
+		 * check of the subdirectories have a file, if yes, set it as relevant(so that it is sent) also count
+		 * the number of files and the total number of words inside it.
+		 */
 		for(Directory subDirectory : directory.getSubDirectoryList()) {
+			if(subDirectory == null) continue;
 			directory.setFileCount(directory.getFileCount() + subDirectory.getFileCount());
+			directory.setTotalWords(directory.getTotalWords()+subDirectory.getTotalWords());
 			if(subDirectory.isRelevant()) {
 				directory.setRelevant(true);
 			}
 		}
+		
+		//if the directory is not relevant, set it to null, so that it is not sent.
 		if(!directory.isRelevant()) {
 			directory = null;
 			}	

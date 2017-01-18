@@ -29,9 +29,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  *  @author Kartik
  *  This class processes the relevant files by using multiple threads to process the file parallely
- *  the bufferred reader reads the file and inserts the lines into a ArrayBlockingQueue
+ *  the buffered reader reads the file and inserts the lines into a ArrayBlockingQueue
+ *  (producer consumer pattern)
  *  The threads then pick up these lines from the queue and process them to check for their words.
- *  finally, the final word count is calculated and also the file is classifed as long or short, depending on the
+ *  finally, the final word count is calculated and also the file is classified as long or short, depending on the
  *  count of its words.
  *  
  */
@@ -79,7 +80,7 @@ public class CustomFileThread implements Callable <Long> {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(customFile.getFile()))) {
 			while((line= bufferedReader.readLine()) != null) {
 				line = line.trim();
-				if(line == "") break;
+				if(line == "") continue;
 				setOfLines.put(line);
 				 Future<Long> future = executor.submit(this);
 				 listOfFutures.add(future);
@@ -126,23 +127,32 @@ public class CustomFileThread implements Callable <Long> {
 	@Override
 	public Long call() throws Exception {
 		String line;
+		char [] wordArray;
+		int i;
+		char c;
 		try {
 			line = setOfLines.take();
 			String[] words = line.replaceAll("\\s+", " ").split(" ");
 			
 			for(String word : words) {
-				
-				if(word.isEmpty()) break;
-					if(wordCount.containsKey(word)) {
-						synchronized (this) {
-							wordCount.put(word, (wordCount.get(word)+1));
-						}
+				wordArray = word.toCharArray();
+				for(i=0;i<wordArray.length;i++) {
+					c = wordArray[i];
+					if(!((c>64&&c<91)||(c>96 &&c<123))) {
+						word = word.replace(c+"","" );
 					}
-					else {
-						synchronized (this) {
-							wordCount.put(word, 1);
-						}	
+				}
+				if(word.isEmpty()) continue;
+				if(wordCount.containsKey(word)) {
+					synchronized (this) {
+						wordCount.put(word, (wordCount.get(word)+1));
 					}
+				}
+				else {
+					synchronized (this) {
+						wordCount.put(word, 1);
+					}	
+				}
 			}	
 			
 		} 

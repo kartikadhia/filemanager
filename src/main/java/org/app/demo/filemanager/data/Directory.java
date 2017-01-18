@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * it may have other folder/directory, and other files. We will only load the files that are
  * relevant to our case.
  * Each folder will have a parent folder (except for the root folder)
- * This class will check for child directories and files and load them appropriately.
  */
 @JsonPropertyOrder({"name", "depth","longFilesList","shortFilesList","subDirectoryList","errorString"})
 public class Directory implements Serializable {
@@ -34,7 +33,6 @@ public class Directory implements Serializable {
 	private Directory parentDirectory;
 	@JsonIgnore
 	private boolean isRelevant = false;
-	
 	private List<Directory> subDirectoryList = new ArrayList<Directory>();
 	private List<CustomFile> longFilesList = new ArrayList<CustomFile>();
 	private List<CustomFile> shortFilesList = new ArrayList<CustomFile>();
@@ -42,6 +40,7 @@ public class Directory implements Serializable {
 	private int fileCount = 0;
 	private String errorString = "";
 	private String name;
+	private long totalWords;
 
 	public Directory () {
 	}
@@ -65,10 +64,11 @@ public class Directory implements Serializable {
 	public void setErrorString(String errorString) {
 		this.errorString = errorString;
 	}
+	@JsonIgnore
 	public Directory getParentDirectory() {
 		return parentDirectory;
 	}
-
+	@JsonIgnore
 	public void setParentDirectory(Directory parentDirectory) {
 		this.parentDirectory = parentDirectory;
 	}
@@ -111,6 +111,14 @@ public class Directory implements Serializable {
 
 	public void setFileCount(int fileCount) {
 		this.fileCount = fileCount;
+	}
+
+	public long getTotalWords() {
+		return totalWords;
+	}
+
+	public void setTotalWords(long totalWords) {
+		this.totalWords = totalWords;
 	}
 	
 

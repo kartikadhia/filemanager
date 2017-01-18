@@ -1,13 +1,13 @@
 package org.app.demo.filemanager.data;
 
 import java.io.BufferedReader;
+
+/**
+ * This class is the bare bones structure for the file information that is sent on the web service.
+ * 
+ */
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -20,12 +20,13 @@ public class CustomFile implements Serializable{
 	private static final long serialVersionUID = 4625897134647623553L;
 	@JsonIgnore
 	private File file;
+	@JsonIgnore
+	private Directory parent;
+	
 	private long size ;
 	private ConcurrentHashMap<String, Integer> wordCount = new ConcurrentHashMap<String, Integer>();
 	private long totalWords;
 	private String errorString= "";
-	@JsonIgnore
-	private Directory parent;
 	private String name;
 	
 	public CustomFile () {}

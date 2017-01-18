@@ -12,11 +12,10 @@ import org.app.demo.filemanager.utility.FolderManager;
 
 public class FileManagerService {
 	
-	FolderManager folderManager = new FolderManager();
+	FolderManager folderManager = FolderManager.getFolderManager();
 	
 	public Directory getFilesAtPath(String path ) throws InvalidOrEmptyPathException {
 		return folderManager.processFilesForPath(path);
 	}
-	
 
 }
