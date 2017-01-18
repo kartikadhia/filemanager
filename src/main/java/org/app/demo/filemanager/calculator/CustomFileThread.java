@@ -143,16 +143,14 @@ public class CustomFileThread implements Callable <Long> {
 					}
 				}
 				if(word.isEmpty()) continue;
-				if(wordCount.containsKey(word)) {
-					synchronized (this) {
+				synchronized (this) {
+					if(wordCount.containsKey(word)) {
 						wordCount.put(word, (wordCount.get(word)+1));
 					}
-				}
-				else {
-					synchronized (this) {
+					else {
 						wordCount.put(word, 1);
-					}	
-				}
+					}
+			}
 			}	
 			
 		} 
