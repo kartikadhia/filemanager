@@ -2,11 +2,10 @@ package org.app.demo.filemanager.test;
 
 import static org.junit.Assert.*;
 
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.constraints.AssertTrue;
 
 import org.app.demo.filemanager.calculator.CustomFileThread;
 import org.app.demo.filemanager.data.CustomFile;
@@ -16,7 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import junit.framework.Assert;
+
 
 public class CustomFileThreadTest {
 	CustomFileThread customFileThread1 = new CustomFileThread(1000,50);
@@ -26,6 +25,7 @@ public class CustomFileThreadTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		@SuppressWarnings("unused")
 		CustomFileThread customFileThread1 = new CustomFileThread(1000,50);
 	}
 
@@ -36,7 +36,9 @@ public class CustomFileThreadTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	/**
+	 * tests if a big file is counted correctly
+	 */
 	@Test
 	public void testBigFile() {
 		File file = new File("C:/Users/Kartik/Documents/java/testfolder/standard test folder/standard test big file.txt");
@@ -44,7 +46,6 @@ public class CustomFileThreadTest {
 		File originalFile = file;
 		List<CustomFile> parentLongFilesList = new ArrayList<CustomFile> ();
 		List<CustomFile> parentShortFilesList = new ArrayList<CustomFile> ();
-		
 		CustomFileThread customFileThread = new CustomFileThread(customFile,parentLongFilesList,parentShortFilesList);
 		customFileThread.processFile();
 		assertEquals(originalFile.length(), customFile.getFile().length());
@@ -65,7 +66,6 @@ public class CustomFileThreadTest {
 		File originalFile = file;
 		List<CustomFile> parentLongFilesList = new ArrayList<CustomFile> ();
 		List<CustomFile> parentShortFilesList = new ArrayList<CustomFile> ();
-		
 		CustomFileThread customFileThread = new CustomFileThread(customFile,parentLongFilesList,parentShortFilesList);
 		customFileThread.processFile();
 		assertEquals(originalFile.length(), customFile.getFile().length());
@@ -74,6 +74,9 @@ public class CustomFileThreadTest {
 		assertEquals(593, customFile.getTotalWords());
 		
 	}
+	/**
+	 * tests if an empty file is counted correctly
+	 */
 	
 	@Test
 	public void testEmptyFile() {
@@ -82,7 +85,6 @@ public class CustomFileThreadTest {
 		File originalFile = file;
 		List<CustomFile> parentLongFilesList = new ArrayList<CustomFile> ();
 		List<CustomFile> parentShortFilesList = new ArrayList<CustomFile> ();
-		
 		CustomFileThread customFileThread = new CustomFileThread(customFile,parentLongFilesList,parentShortFilesList);
 		customFileThread.processFile();
 		assertEquals(originalFile.length(), customFile.getFile().length());

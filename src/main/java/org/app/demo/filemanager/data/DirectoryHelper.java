@@ -32,7 +32,15 @@ public class DirectoryHelper {
 		this.directory = directory;
 	}
 
-	
+	/**
+	 * creates objects of type directory that can be converted to JSON and sent over the web.
+	 * checks the folder for sub folders and file recursively, to create a structured directory, that
+	 * represents the folder structure.
+	 * It excludes folders that do not have files having the correct extension
+	 * 
+	 * @param path to the folder
+	 * @return Directory containing details of the folder
+	 */
 	public Directory processAllChildren(String path) {
 		File thisFile = new File(path);
 		String [] children = thisFile.list();
@@ -47,6 +55,7 @@ public class DirectoryHelper {
 						// if subdirectory is relevant (not null) add it to the subdirectory list
 						if(subDirectoryHelper.getDirectory() != null) {
 						directory.getSubDirectoryList().add(subDirectoryHelper.getDirectory());
+						//set the parent directory of the current directory, only if it is not the root parent
 						if(subDirectoryHelper.getDirectory().getDepth()>0)
 						subDirectoryHelper.getDirectory().setParentDirectory(directory);
 						}
@@ -69,7 +78,7 @@ public class DirectoryHelper {
 					+ " process may not have the permissions to access all the files and/or folders of this directory");
 				}
 			}
-		/** 
+		/* 
 		 * check of the subdirectories have a file, if yes, set it as relevant(so that it is sent) also count
 		 * the number of files and the total number of words inside it.
 		 */

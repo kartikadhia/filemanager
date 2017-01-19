@@ -1,20 +1,13 @@
 package org.app.demo.filemanager.data;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
@@ -33,6 +26,7 @@ public class Directory implements Serializable {
 	private Directory parentDirectory;
 	@JsonIgnore
 	private boolean isRelevant = false;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private List<Directory> subDirectoryList = new ArrayList<Directory>();
 	private List<CustomFile> longFilesList = new ArrayList<CustomFile>();
 	private List<CustomFile> shortFilesList = new ArrayList<CustomFile>();
@@ -45,9 +39,11 @@ public class Directory implements Serializable {
 	public Directory () {
 	}
 	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public List<Directory> getSubDirectoryList() {
 		return subDirectoryList;
 	}
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public void setSubDirectoryList(List<Directory> subDirectoryList) {
 		this.subDirectoryList = subDirectoryList;
 	}

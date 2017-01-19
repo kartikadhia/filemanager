@@ -1,13 +1,12 @@
 package org.app.demo.filemanager.test;
 
 import static org.junit.Assert.*;
-
 import org.app.demo.filemanager.calculator.FileProcessor;
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 
 public class FileProcessorTest {
@@ -21,7 +20,6 @@ public class FileProcessorTest {
 	public void setUp() throws Exception {
 		fileProcessor = new FileProcessor();
 		path = "C:\\Users\\Kartik\\Documents\\java\\testfolder\\standard test folder";
-		
 		invalidPath = "aaaa";
 	}
 
@@ -30,9 +28,8 @@ public class FileProcessorTest {
 	}
 
 	@Test
-	public void testAll() throws InvalidOrEmptyPathException {
-		directory =  fileProcessor.processFilesForPath(path,".txt"
-				,1000,50,true);
+	public void testForNormalPath() throws InvalidOrEmptyPathException {
+		directory =  fileProcessor.processFilesForPath(path,".txt",1000,50,true);
 		assertEquals(5, directory.getFileCount());
 		assertEquals(0, directory.getDepth());
 		System.out.println(directory.getName());
@@ -54,15 +51,26 @@ public class FileProcessorTest {
 					,1000,50,true);
 		    fail( "did not throw expected exception" );
 
-		}
+	}
 	@Test(expected=InvalidOrEmptyPathException.class)
 	public void testEmptyPath() throws InvalidOrEmptyPathException  {
-	
 			directory =  fileProcessor.processFilesForPath("",".txt"
 					,1000,50,true);
 		    fail( "did not throw expected exception" );
 
-		}
+	}
+	@Test
+	public void testForEmptyDirectory() {
+		directory = fileProcessor.getEmptyDirectory(path);
+		assertEquals("standard test folder",directory.getName() );
+		assertEquals(0,directory.getDepth());
+		assertEquals(0,directory.getFileCount());
+		assertEquals(0,directory.getLongFilesList().size() );
+		assertEquals(0,directory.getShortFilesList().size());
+		assertEquals(null,directory.getParentDirectory());
+		assertEquals(0,directory.getSubDirectoryList().size());
+		assertEquals(false,directory.isRelevant());
+	}
 	
 	
 

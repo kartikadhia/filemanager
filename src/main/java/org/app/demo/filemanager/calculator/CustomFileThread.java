@@ -63,6 +63,11 @@ public class CustomFileThread implements Callable <Long> {
 		this.parentLongFilesList= parentLongFilesList;
 		this.parentShortFilesList = parentShortFilesList;
 	}
+	/**
+	 * Processes the file by dividing it into lines and then adding them to a ArrayBlockingQueue
+	 * generates threads using the executor framework that then pick up these lines and process them further
+	 * Adds the information to the file class, so that it can be sent in the response
+	 */
 	public void processFile() {
 		//process word count here
 		long startTime = System.currentTimeMillis();
@@ -122,6 +127,12 @@ public class CustomFileThread implements Callable <Long> {
 	    long elapsedTime = stopTime - startTime;
 	    logger.debug("processed file "+ customFile.getName() + " in " + elapsedTime + "ms");
 	}
+	/**
+	 * overridden method that is called when a new task is submitted for this class.
+	 * The generated thread picks up lines from the ArrayBlockingQueue, then
+	 * splits it into words and then populates an array, that is later used to count the number of words and
+	 * occurrence of each word.
+	 */
 
 	@Override
 	public Long call() throws Exception {
@@ -154,6 +165,9 @@ public class CustomFileThread implements Callable <Long> {
 			
 		} 
 		catch (InterruptedException e) {
+			customFile.setErrorString("An Error occurred while processing this file, word count may not"
+					+"be accurate");
+			
 			logger.error(e);
 		}
 		return new Long(0);

@@ -14,6 +14,12 @@ public class FileManagerService {
 	
 	FolderManager folderManager = FolderManager.getFolderManager();
 	
+	/**
+	 * Service method to get the details of the folder at a certain path
+	 * @param path of the folder that needs to be searched
+	 * @return the directory object, that needs to be converted and sent over to the client
+	 * @throws InvalidOrEmptyPathException in case the 
+	 */
 	public Directory getFilesAtPath(String path ) throws InvalidOrEmptyPathException {
 		return folderManager.processFilesForPath(path);
 	}

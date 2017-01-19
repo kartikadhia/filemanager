@@ -6,6 +6,8 @@ package org.app.demo.filemanager.exception;
 
 public class InvalidOrEmptyPathException extends Exception {
 	
+	private static final long serialVersionUID = 1L;
+	
 	public InvalidOrEmptyPathException(String message) {
 		super(message);
 	}

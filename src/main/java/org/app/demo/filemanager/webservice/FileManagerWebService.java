@@ -1,8 +1,5 @@
 package org.app.demo.filemanager.webservice;
 
-
-import java.io.File;
-
 import javax.ws.rs.GET;
 
 import javax.ws.rs.Path;
@@ -12,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.app.demo.filemanager.data.CustomFile;
+
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
 import org.app.demo.filemanager.service.FileManagerService;
