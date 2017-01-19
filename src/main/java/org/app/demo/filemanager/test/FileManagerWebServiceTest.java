@@ -36,27 +36,27 @@ public class FileManagerWebServiceTest {
 		response = fileManagerWebService.getAllFilesAtPath(path);
 		//check if response is of the appropriate class
 		assertEquals(Directory.class, response.getEntity().getClass());
-		assertEquals(Status.OK,response.getStatus());
+		assertEquals(200,response.getStatus());
 	}
 	/**
 	 * test for an invalid path
 	 */
 	@Test
 	public void testWebServiceCallForInvalidPath() {
-		response = fileManagerWebService.getAllFilesAtPath(path);
+		response = fileManagerWebService.getAllFilesAtPath(invalidPath);
 		//check if response is of the appropriate class
-		assertEquals(Directory.class, response.getEntity().getClass());
-		assertEquals(Status.NOT_FOUND,response.getStatus());
+		assertEquals(null, response.getEntity());
+		assertEquals(404,response.getStatus());
 	}
 	/**
 	 * test for an Empty path
 	 */
 	@Test
 	public void testWebServiceCallForEmptyPath() {
-		response = fileManagerWebService.getAllFilesAtPath(path);
+		response = fileManagerWebService.getAllFilesAtPath("");
 		//check if response is of the appropriate class
-		assertEquals(Directory.class, response.getEntity().getClass());
-		assertEquals(Status.NOT_FOUND,response.getStatus());
+		assertEquals(null, response.getEntity());
+		assertEquals(404,response.getStatus());
 	}
 
 }
