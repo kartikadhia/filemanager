@@ -31,23 +31,42 @@ public class FileProcessor {
 	public Directory processFilesForPath(String path, String fileExtention, int thresholdForLongFile,
 			int thresholdForWordRepetition, boolean checkHidden) throws InvalidOrEmptyPathException {
 		// check if the original path is a valid directory, if not throw an exception
-		
+		File file;
+		String name;
 		if(path == "") {
 			logger.info("Input path is not a valid directory");
 			throw new InvalidOrEmptyPathException("Input path is an empty String");
 		}
-		
+		//remove /  or \\ from the end of the path
 		if((path.charAt(path.length()-1) == '/' || path.charAt(path.length()-1) == '\\')) {
 			path = path.substring(0, path.length()-1);
 		}
-		
-		if(!((new File(path)).isDirectory())) {
+		path = path.replace('\\', '/');
+		// check if input path is a valid directory, if not throw an exception
+		file = new File(path);
+		if(!((file).isDirectory())) {
+			// if the path is a valid file, remove filename from the path details about this file and send the root folder:
+			if(file.isFile())  {
+				System.out.println("file detected");
+				 String fileName = path.substring(path.lastIndexOf('/')+1, path.length());
+				 System.out.println("file name = " + fileName);
+				 if(fileName.endsWith(fileExtention)) {
+					 System.out.println("truncating path " + path);
+					 path = path.substring(0,path.lastIndexOf('/'));
+					 System.out.println("truncated path " + path);
+					 return processFilesForPath(path,fileExtention,thresholdForLongFile
+							 					,thresholdForWordRepetition,checkHidden);
+				 }
+				 else
+				 throw new InvalidOrEmptyPathException("Input path is not file that matches the extension to be checked");	 
+			}
 			logger.info("Input path is not a valid directory");
 			throw new InvalidOrEmptyPathException("Input path is not a valid directory");
 		}
 		
+		
 		//get the name of root directory
-		String name = path.substring(path.lastIndexOf('/')+1, path.length());
+		name = path.substring(path.lastIndexOf('/')+1, path.length());
 		//create a constructor, to set the static values of the class
 		@SuppressWarnings("unused")
 		CustomFileThread customFileThread = new CustomFileThread(thresholdForLongFile,thresholdForWordRepetition);
