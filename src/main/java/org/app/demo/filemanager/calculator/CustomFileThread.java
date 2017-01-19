@@ -75,22 +75,21 @@ public class CustomFileThread implements Callable <Long> {
 		
 		// ExecutorService executor =  Executors.newCachedThreadPool();
 		// ExecutorService executor =  Executors.newWorkStealingPool();
-		 ExecutorService executor =  Executors.newFixedThreadPool(4); 
+		   ExecutorService executor =  Executors.newFixedThreadPool(4); 
 		
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(customFile.getFile()))) {
 			while((line= bufferedReader.readLine()) != null) {
 				line = line.trim();
 				if(line == "") continue;
 				setOfLines.put(line);
-				 Future<Long> future = executor.submit(this);
-				 listOfFutures.add(future);
+				Future<Long> future = executor.submit(this);
+				listOfFutures.add(future);
 				}
 			// wait until all the futures return.
 			for (Future <Long> future : listOfFutures) {
 				future.get();
 			}
-			
-			// stop accepting new tasks
+			// stop accepting new tasks, close the executor
 			executor.shutdown();
 		}
 		catch (IOException e1) {

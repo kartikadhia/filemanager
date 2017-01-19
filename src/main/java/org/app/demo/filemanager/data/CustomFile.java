@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"name","size","totalWords","wordCount","errorString"})
@@ -22,8 +23,8 @@ public class CustomFile implements Serializable{
 	private File file;
 	@JsonIgnore
 	private Directory parent;
-	
 	private long size ;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private ConcurrentHashMap<String, Integer> wordCount = new ConcurrentHashMap<String, Integer>();
 	private long totalWords;
 	private String errorString= "";
@@ -45,11 +46,11 @@ public class CustomFile implements Serializable{
 	public void setSize(long size) {
 		this.size = size;
 	}
-
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public ConcurrentHashMap<String, Integer> getWordCount() {
 		return wordCount;
 	}
-
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public void setWordCount(ConcurrentHashMap<String, Integer> wordCount) {
 		this.wordCount = wordCount;
 	}

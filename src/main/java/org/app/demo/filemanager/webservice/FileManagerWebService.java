@@ -44,7 +44,7 @@ public class FileManagerWebService {
 		    logger.info("Request served in "+ elapsedTime + "ms");
 		    return Response.status(Status.OK).entity(directory).build();
 			}
-		catch(InvalidOrEmptyPathException e ) {
+		catch(InvalidOrEmptyPathException e) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}

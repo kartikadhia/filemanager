@@ -45,9 +45,11 @@ public class DirectoryHelper {
 						subDirectoryHelper.processAllChildren(subPath);
 						
 						// if subdirectory is relevant (not null) add it to the subdirectory list
-						if(subDirectoryHelper.getDirectory() != null)
+						if(subDirectoryHelper.getDirectory() != null) {
 						directory.getSubDirectoryList().add(subDirectoryHelper.getDirectory());
-						
+						if(subDirectoryHelper.getDirectory().getDepth()>0)
+						subDirectoryHelper.getDirectory().setParentDirectory(directory);
+						}
 					}
 					else if(childFile.isFile() && child.endsWith(fileExtention) &&(checkHidden || !childFile.isHidden())) {
 						CustomFile customFile = new CustomFile(childFile,child,directory);
@@ -64,7 +66,7 @@ public class DirectoryHelper {
 				}
 				catch(Exception e) {
 					directory.setErrorString("there was an error accessing this directory. the user running this"
-					+ " process may not have the permissions to access all the subfiles of this directory");
+					+ " process may not have the permissions to access all the files and/or folders of this directory");
 				}
 			}
 		/** 
@@ -87,8 +89,5 @@ public class DirectoryHelper {
 		return directory;
 		
 	}
-	
-	
-	
 
 }
