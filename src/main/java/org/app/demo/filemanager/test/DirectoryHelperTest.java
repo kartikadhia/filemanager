@@ -46,13 +46,15 @@ public class DirectoryHelperTest {
 		//check all attributes of the sub folder
 		assertEquals(1,directory.getSubDirectoryList().get(0).getDepth());
 		assertEquals("folder level 1",directory.getSubDirectoryList().get(0).getName());
+		System.out.println("directory helper test : directory name = "+ directory.getSubDirectoryList().get(0).getName());
 		assertEquals(2,directory.getSubDirectoryList().get(0).getFileCount());
-		assertEquals(1,directory.getSubDirectoryList().get(0).getLongFilesList().size());
-		assertEquals(1,directory.getSubDirectoryList().get(0).getShortFilesList().size());
+		assertEquals(0,directory.getSubDirectoryList().get(0).getLongFilesList().size());
+		assertEquals(2,directory.getSubDirectoryList().get(0).getFileCount());
+		assertEquals(0,directory.getSubDirectoryList().get(0).getShortFilesList().size());
 		assertEquals("folder level 2",directory.getSubDirectoryList().get(0).getSubDirectoryList().get(0).getName());
 		assertEquals(1186,directory.getSubDirectoryList().get(0).getTotalWords());
 		assertEquals(directory,directory.getSubDirectoryList().get(0).getParentDirectory());
-		assertEquals(null,directory.getSubDirectoryList().get(0).getErrorString());
+		assertEquals("",directory.getSubDirectoryList().get(0).getErrorString());
 	
 	}
 
