@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Directory implements Serializable {
 	@JsonIgnore
 	private static final long serialVersionUID = -1569540135638641823L;
-	//FIXME implement HATEOAS for parentDirectory
 	@JsonIgnore
 	private Directory parentDirectory;
 	@JsonIgnore
