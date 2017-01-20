@@ -15,7 +15,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
+/**
+ * Tester class for class CustomFileThread
+ * @author Kartik
+ *
+ */
 
 public class CustomFileThreadTest {
 	CustomFileThread customFileThread1 = new CustomFileThread(1000,50);

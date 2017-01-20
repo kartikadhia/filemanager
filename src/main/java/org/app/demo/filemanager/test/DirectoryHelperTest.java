@@ -7,6 +7,11 @@ import org.app.demo.filemanager.data.DirectoryHelper;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Kartik
+ * Tester class for  DirectoryHelper
+ */
 public class DirectoryHelperTest {
 	
 	String path;

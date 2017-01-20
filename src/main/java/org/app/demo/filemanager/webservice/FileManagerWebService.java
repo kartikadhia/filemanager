@@ -27,6 +27,13 @@ public class FileManagerWebService {
 	final static Logger logger = Logger.getLogger(FileManagerWebService.class);
 	private FileManagerService fileManagerService = new FileManagerService();
 	
+	/**
+	 * Service all requests for the mapping /files/{path}
+	 * Get and return the details of the path
+	 * @param path to the folder
+	 * @return Folder structure and file details for the given path
+	 */
+	
 	@GET
 	@Path("/{path:.*}")
 	@Produces(MediaType.APPLICATION_JSON)

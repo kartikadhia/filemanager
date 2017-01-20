@@ -3,7 +3,11 @@ package org.app.demo.filemanager.test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
+/**
+ * 
+ * @author Kartik
+ * Test suite for running all the JUnit together
+ */
 
 @RunWith(Suite.class)
 @SuiteClasses({  CustomFileThreadTest.class, FileProcessorTest.class, PropertiesReaderTest.class,

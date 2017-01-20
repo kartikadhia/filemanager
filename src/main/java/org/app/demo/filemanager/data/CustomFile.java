@@ -2,9 +2,10 @@ package org.app.demo.filemanager.data;
 
 
 
-/**
- /** This class is the bare bones structure for the file information that is sent on the web service.
- * 
+
+ /** 
+  * @author Kartik
+  * This class is the bare bones structure for the file information that is sent on the web service.
  */
 import java.io.File;
 import java.io.Serializable;

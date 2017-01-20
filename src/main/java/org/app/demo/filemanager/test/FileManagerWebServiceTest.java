@@ -10,6 +10,11 @@ import org.app.demo.filemanager.webservice.FileManagerWebService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+/**
+ * Tester class for class FileManagerWebService
+ * @author Kartik
+ *
+ */
 
 public class FileManagerWebServiceTest {
 

@@ -76,6 +76,7 @@ public class FolderManager {
 	public void setCheckHidden(boolean checkHidden) {
 		this.checkHidden = checkHidden;
 	}
+	
 	/**
 	 * sets values of the properties in case there is failure to read the properties file
 	 * Then creates a directory and returns it 
@@ -85,8 +86,7 @@ public class FolderManager {
 	 * @return
 	 * @throws InvalidOrEmptyPathException
 	 */
-	
-	
+
 	public Directory processFilesForPath(String path) throws InvalidOrEmptyPathException {
 		
 		if(fileExtention == null) {

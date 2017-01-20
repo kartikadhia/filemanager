@@ -8,6 +8,11 @@ import org.app.demo.filemanager.utility.PropertiesReader;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+/**
+ * Tester class for class PropertiesReader
+ * @author Kartik
+ *
+ */
 
 
 public class PropertiesReaderTest {
