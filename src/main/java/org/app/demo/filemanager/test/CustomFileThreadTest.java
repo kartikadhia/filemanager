@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 
 public class CustomFileThreadTest {
-	CustomFileThread customFileThread1 = new CustomFileThread(1000,50);
+	CustomFileThread customFileThread1 = new CustomFileThread(1000,50,true);
 	
 	CustomFileThread customFileThread;
 	CustomFile customFile;
@@ -30,7 +30,7 @@ public class CustomFileThreadTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		@SuppressWarnings("unused")
-		CustomFileThread customFileThread1 = new CustomFileThread(1000,50);
+		CustomFileThread customFileThread1 = new CustomFileThread(1000,50,true);
 	}
 
 	@Before

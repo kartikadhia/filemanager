@@ -32,7 +32,7 @@ public class PropertiesReaderTest {
 		assertEquals("",folderManager.getFileExtention());
 		assertEquals(1000, folderManager.getThresholdForLongFile());
 		assertEquals(50, folderManager.getThresholdForWordRepetition());
-		
+		assertEquals(true,folderManager.isCheckHidden());
 	}
 
 }

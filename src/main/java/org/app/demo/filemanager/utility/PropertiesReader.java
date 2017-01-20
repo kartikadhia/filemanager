@@ -1,7 +1,5 @@
 package org.app.demo.filemanager.utility;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -33,6 +31,7 @@ public class PropertiesReader {
 			folderManager.setThresholdForWordRepetition(
 					Integer.valueOf(properties.getProperty("threshold_for_word_repetition","50")));
 			folderManager.setCheckHidden(Boolean.valueOf(properties.getProperty("check_hidden","true")));
+			folderManager.setCountNumbers(Boolean.valueOf(properties.getProperty("count_numbers","true")));
 			
 			logger.debug(("read properties file,  file_extention = " +
 										properties.getProperty("file_extention")));

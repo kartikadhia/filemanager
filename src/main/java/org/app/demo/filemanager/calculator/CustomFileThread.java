@@ -37,6 +37,7 @@ public class CustomFileThread implements Callable <Long> {
 	private static int thresholdForLongFile;
 	private static int thresholdForWordRepetition;
 	private CustomFile customFile;
+	private static boolean countNumbers;
 	private List<CustomFile> parentLongFilesList;
 	private List<CustomFile> parentShortFilesList;
 	private int totalWords = 0;
@@ -46,9 +47,10 @@ public class CustomFileThread implements Callable <Long> {
 		
 	}
 	
-	public CustomFileThread(int thresholdForLongFile, int thresholdForWordRepetition) {
+	public CustomFileThread(int thresholdForLongFile, int thresholdForWordRepetition,boolean countNumbers) {
 		CustomFileThread.thresholdForLongFile =thresholdForLongFile;
 		CustomFileThread.thresholdForWordRepetition = thresholdForWordRepetition;
+		CustomFileThread.countNumbers = countNumbers;
 	}
 	public CustomFileThread(CustomFile customFile,List<CustomFile> parentLongFilesList,
 									List<CustomFile> parentShortFilesList) {
@@ -142,7 +144,7 @@ public class CustomFileThread implements Callable <Long> {
 				wordArray = word.toCharArray();
 				for(i=0;i<wordArray.length;i++) {
 					c = wordArray[i];
-					if(!((c>64&&c<91)||(c>96 &&c<123))) {
+					if(countNumbers ? (!((c>64&&c<91)||(c>96 &&c<123)||(c>47&&c<58))) : (!((c>64&&c<91)||(c>96 &&c<123))) ) {
 						word = word.replace(c+"","" );
 					}
 				}

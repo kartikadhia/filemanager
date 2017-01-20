@@ -29,7 +29,7 @@ public class FileProcessor {
 	 */
 	
 	public Directory processFilesForPath(String path, String fileExtention, int thresholdForLongFile,
-			int thresholdForWordRepetition, boolean checkHidden) throws InvalidOrEmptyPathException {
+			int thresholdForWordRepetition, boolean checkHidden,boolean countNumbers) throws InvalidOrEmptyPathException {
 		// check if the original path is a valid directory, if not throw an exception
 		File file;
 		String name;
@@ -55,7 +55,7 @@ public class FileProcessor {
 					 path = path.substring(0,path.lastIndexOf('/'));
 					 System.out.println("truncated path " + path);
 					 return processFilesForPath(path,fileExtention,thresholdForLongFile
-							 					,thresholdForWordRepetition,checkHidden);
+							 					,thresholdForWordRepetition,checkHidden,countNumbers);
 				 }
 				 else
 				 throw new InvalidOrEmptyPathException("Input path is not file that matches the extension to be checked");	 
@@ -69,7 +69,7 @@ public class FileProcessor {
 		name = path.substring(path.lastIndexOf('/')+1, path.length());
 		//call to the constructor, to set the static values of the class
 		@SuppressWarnings("unused")
-		CustomFileThread customFileThread = new CustomFileThread(thresholdForLongFile,thresholdForWordRepetition);
+		CustomFileThread customFileThread = new CustomFileThread(thresholdForLongFile,thresholdForWordRepetition,countNumbers);
 		
 		DirectoryHelper parentDirectoryHelper = new DirectoryHelper(name,0,fileExtention,checkHidden);
 		Directory parent = parentDirectoryHelper.processAllChildren(path);

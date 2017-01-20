@@ -34,7 +34,7 @@ public class FileProcessorTest {
 
 	@Test
 	public void testForNormalPath() throws InvalidOrEmptyPathException {
-		directory =  fileProcessor.processFilesForPath(path,".txt",1000,50,true);
+		directory =  fileProcessor.processFilesForPath(path,".txt",1000,50,true,true);
 		assertEquals(5, directory.getFileCount());
 		assertEquals(0, directory.getDepth());
 		System.out.println(directory.getName());
@@ -53,14 +53,14 @@ public class FileProcessorTest {
 	public void testWrongPath() throws InvalidOrEmptyPathException  {
 	
 			directory =  fileProcessor.processFilesForPath(invalidPath,".txt"
-					,1000,50,true);
+					,1000,50,true,true);
 		    fail( "did not throw expected exception" );
 
 	}
 	@Test(expected=InvalidOrEmptyPathException.class)
 	public void testEmptyPath() throws InvalidOrEmptyPathException  {
 			directory =  fileProcessor.processFilesForPath("",".txt"
-					,1000,50,true);
+					,1000,50,true,true);
 		    fail( "did not throw expected exception" );
 
 	}

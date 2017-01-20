@@ -1,12 +1,11 @@
 package org.app.demo.filemanager.utility;
 
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.app.demo.filemanager.calculator.FileProcessor;
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
-import org.app.demo.filemanager.webservice.FileManagerWebService;
+
 
 /**
  *  @author Kartik
@@ -26,13 +25,15 @@ public class FolderManager {
 	private static int thresholdForLongFile;
 	private static int thresholdForWordRepetition;
 	private static boolean checkHidden;
+	private static boolean countNumbers;
 	
+	@SuppressWarnings("unused")
 	private  PropertiesReader propertiesReader;
 	private FileProcessor fileProcessor;
 	private static volatile FolderManager folderManager;
 	
 	private FolderManager () {
-		propertiesReader = new PropertiesReader(this);
+		propertiesReader = new PropertiesReader();
 		fileProcessor = new FileProcessor();
 	}
 	
@@ -50,7 +51,7 @@ public class FolderManager {
 	}
 
 	public void setFileExtention(String fileExtention) {
-		this.fileExtention = fileExtention;
+		FolderManager.fileExtention = fileExtention;
 	}
 
 	public int getThresholdForLongFile() {
@@ -58,7 +59,7 @@ public class FolderManager {
 	}
 
 	public void setThresholdForLongFile(int thresholdForLongFile) {
-		this.thresholdForLongFile = thresholdForLongFile;
+		FolderManager.thresholdForLongFile = thresholdForLongFile;
 	}
 
 	public int getThresholdForWordRepetition() {
@@ -66,7 +67,7 @@ public class FolderManager {
 	}
 
 	public void setThresholdForWordRepetition(int thresholdForWordRepetition) {
-		this.thresholdForWordRepetition = thresholdForWordRepetition;
+		FolderManager.thresholdForWordRepetition = thresholdForWordRepetition;
 	}
 	
 	public boolean isCheckHidden() {
@@ -74,7 +75,7 @@ public class FolderManager {
 	}
 
 	public void setCheckHidden(boolean checkHidden) {
-		this.checkHidden = checkHidden;
+		FolderManager.checkHidden = checkHidden;
 	}
 	
 	/**
@@ -95,15 +96,24 @@ public class FolderManager {
 			thresholdForLongFile = 1000;
 			thresholdForWordRepetition = 50;
 			checkHidden = true;
+			countNumbers = true;
 		}
 		Directory directory =  fileProcessor.processFilesForPath(path,fileExtention
-					,thresholdForLongFile,thresholdForWordRepetition,checkHidden);
+					,thresholdForLongFile,thresholdForWordRepetition,checkHidden,countNumbers);
 		// if directory does not contain any files or relevant folders, return empty directory
 		if(directory == null) {
 			directory = fileProcessor.getEmptyDirectory(path);
 		}
 			
 		return directory;
+	}
+
+	public static boolean isCountNumbers() {
+		return countNumbers;
+	}
+
+	public static void setCountNumbers(boolean countNumbers) {
+		FolderManager.countNumbers = countNumbers;
 	}
 
 
