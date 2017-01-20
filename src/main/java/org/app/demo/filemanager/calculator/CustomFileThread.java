@@ -78,6 +78,7 @@ public class CustomFileThread implements Callable <Long> {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(customFile.getFile()))) {
 			while((line= bufferedReader.readLine()) != null) {
 				line = line.trim();
+				line = line.toLowerCase();
 				if(line == "") continue;
 				setOfLines.put(line);
 				Future<Long> future = executor.submit(this);

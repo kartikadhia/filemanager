@@ -1,7 +1,10 @@
 package org.app.demo.filemanager.data;
 
 import java.io.File;
+
+import org.apache.log4j.Logger;
 import org.app.demo.filemanager.calculator.CustomFileThread;
+import org.app.demo.filemanager.calculator.FileProcessor;
 
 /**
  *  @author Kartik
@@ -9,6 +12,8 @@ import org.app.demo.filemanager.calculator.CustomFileThread;
  *  It also loads the count and total number of files present in the directory.
  */
 public class DirectoryHelper {
+	final static Logger logger = Logger.getLogger(FileProcessor.class);
+	
 	private Directory directory = new Directory();
 	private static String fileExtention;
 	private static boolean checkHidden;
@@ -76,6 +81,7 @@ public class DirectoryHelper {
 				catch(Exception e) {
 					directory.setErrorString("there was an error accessing this directory. the user running this"
 					+ " process may not have the permissions to access all the files and/or folders of this directory");
+				logger.error(e);
 				}
 			}
 		/* 

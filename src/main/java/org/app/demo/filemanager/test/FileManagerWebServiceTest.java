@@ -2,8 +2,8 @@ package org.app.demo.filemanager.test;
 
 import static org.junit.Assert.*;
 
+
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.webservice.FileManagerWebService;

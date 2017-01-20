@@ -38,6 +38,7 @@ public class PropertiesReader {
 										properties.getProperty("file_extention")));
 			
 		} catch ( IOException e) {
+			logger.equals(e.getStackTrace());
 			e.printStackTrace();
 		}
 	}

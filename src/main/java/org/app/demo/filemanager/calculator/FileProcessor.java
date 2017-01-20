@@ -67,7 +67,7 @@ public class FileProcessor {
 		
 		//get the name of root directory
 		name = path.substring(path.lastIndexOf('/')+1, path.length());
-		//create a constructor, to set the static values of the class
+		//call to the constructor, to set the static values of the class
 		@SuppressWarnings("unused")
 		CustomFileThread customFileThread = new CustomFileThread(thresholdForLongFile,thresholdForWordRepetition);
 		

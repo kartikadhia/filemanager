@@ -42,6 +42,7 @@ public class FileManagerWebService {
 		    return Response.status(Status.OK).entity(directory).build();
 			}
 		catch(InvalidOrEmptyPathException e) {
+			logger.info("Invalid path!");
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
