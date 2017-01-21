@@ -1,0 +1,4 @@
+Android Nougat is Google's big refresh
+It won't stop at Android either
+Check if the service can read the words Google's and won't or not
+Words like Kartik's and Actors' should be considered valid I think

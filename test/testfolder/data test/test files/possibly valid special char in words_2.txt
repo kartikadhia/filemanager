@@ -1,0 +1,6 @@
+If the text contains somewthing like this:
+You're welcome.
+Will it consider you and re as different words?
+Kartik's interview. So it will be one word Kartik's or 2 words Kartik and s?
+run this file, to get the count.
+ 

@@ -1,0 +1,4 @@
+He said, there has been a "conjecture" about this.
+In this File the service should read consider the word "conjecture" as a valid word or not.
+I have this "doubt".
+Full stops present in this file to test the case when special characters along with  words are present.
