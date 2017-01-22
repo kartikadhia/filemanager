@@ -44,6 +44,6 @@ The application should be able to handle multiple requests at the same time.
 5. If, instead of a folder path, the path of a file is sent to the Web Service, it will return a folder object
 	consisting the details of this file.
 	
-### Sample Output:
+### Sample Output :
 The Web Service is invoked for the test folder(it is kept at the path \test folder). in the .output file, you can find the response.
 The whole folder is processed in 1.2 seconds, (on a quad core i7 processor, with an SSD drive)
