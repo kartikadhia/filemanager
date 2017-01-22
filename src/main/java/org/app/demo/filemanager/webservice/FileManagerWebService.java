@@ -54,13 +54,13 @@ public class FileManagerWebService {
 			long startTime = System.currentTimeMillis();
 			
 			
-			logger.info("Received request for path " + path);
-			//FIXME
-			System.out.println("fileExtension = " + fileExtension);
-			System.out.println("checkHidden = " + checkHidden);
-			System.out.println("thresholdForLongFile = " + thresholdForLongFile);
-			System.out.println("thresholdForWordRepetition = " + thresholdForWordRepetition);
-			System.out.println("countNumbers = " + countNumbers);
+			logger.info("Received request for path " + path + "with params" +
+							"fileExtension = " + fileExtension + 
+							"checkHidden = " + checkHidden +
+							"thresholdForLongFile = " + thresholdForLongFile+
+							"thresholdForWordRepetition = " + thresholdForWordRepetition + 
+							"countNumbers = " + countNumbers);
+			
 			Directory directory =   fileManagerService.getFilesAtPath(path,fileExtension,checkHidden,
 															thresholdForLongFile,thresholdForWordRepetition,countNumbers);
 			long stopTime = System.currentTimeMillis();

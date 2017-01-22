@@ -86,5 +86,15 @@ public class FolderManagerTest {
 		assertEquals(0,directory.getSubDirectoryList().size());
 		assertEquals(false,directory.isRelevant());
 	}
+	@Test(expected=InvalidParameterException.class)
+	public void testProcessAllFilesWithInvalidNumber() throws InvalidOrEmptyPathException, InvalidParameterException {
+		folderManager.processFilesForPath(invalidPath,null,null,"323x",null,null);
+		fail("Did not throw the necessary exception");
+	}
+	@Test(expected=InvalidParameterException.class)
+	public void testProcessAllFilesWithInvalidNumberPath() throws InvalidOrEmptyPathException, InvalidParameterException {
+		folderManager.processFilesForPath(invalidPath,null,null,null,"323x",null);
+		fail("Did not throw the necessary exception");
+	}
 	
 }
