@@ -4,8 +4,12 @@
 An application that helps manage .txt files on machine, by sending the details about files (size, word count, number)
 as a web service response.
 It also sends the words that occur more than certain number of times and also their counts.
+<<<<<<< 5fcfa7711abd59bdee4d1b20d2cd23c0cdb2564e
 The files need to be categorized into long and short, depending on the number of words. Also words that are
 repeated certain number of times need to be sent by the web service
+=======
+The files need to be categorized into long and short.
+>>>>>>> a1b066471b3eab5f278c766b6da11f4f404919bc
 The information should be accessible over the web, over a web service, and should be presented in the form of JSON, 
 so that applications written on any of the technologies, are be able to access this information.
 The application should be able to handle multiple request at the same time.
