@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
  * @author Kartik
  * This is the main web service that is exposed to the client
  * It has method(s) that will help service the requests to our URL
+ * 
  */
 
 @Path("/files")
@@ -61,12 +62,11 @@ public class FileManagerWebService {
 							"thresholdForWordRepetition = " + thresholdForWordRepetition + 
 							"countNumbers = " + countNumbers);
 			
-			Directory directory =   fileManagerService.getFilesAtPath(path,fileExtension,checkHidden,
-															thresholdForLongFile,thresholdForWordRepetition,countNumbers);
+			Directory directory =   fileManagerService.getFilesAtPath(path,fileExtension,checkHidden,thresholdForLongFile,thresholdForWordRepetition,countNumbers);
 			long stopTime = System.currentTimeMillis();
-		    long elapsedTime = stopTime - startTime;
-		    logger.info("Request served in "+ elapsedTime + "ms");
-		    return Response.status(Status.OK).entity(directory).build();
+			long elapsedTime = stopTime - startTime;
+			logger.info("Request served in "+ elapsedTime + "ms");
+			return Response.status(Status.OK).entity(directory).build();
 			}
 		catch(InvalidOrEmptyPathException e) {
 			logger.info("Invalid path!");

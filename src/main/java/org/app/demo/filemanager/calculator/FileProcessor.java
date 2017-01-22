@@ -7,8 +7,9 @@ import org.app.demo.filemanager.data.DirectoryHelper;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
 
 /**
+ * 
  * @author Kartik
- * This class  validates if the path is proper and then calls approriate method to generate the 
+ * This class  validates if the path is proper and then calls appropriate method to generate the 
  * file structure and then process the file.
  * It also throws the InvalidOrEmptyPathException, in case the path is not a valid directory in the file system.
  * 

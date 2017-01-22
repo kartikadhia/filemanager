@@ -14,6 +14,7 @@ import org.app.demo.filemanager.calculator.FileProcessor;
  * @author Kartik
  * This class gets the properties mentioned in the properties file and sets it for the object of 
  * Folder Manager Class
+ * 
  */
 public class PropertiesReader {
 	

@@ -7,6 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * 
  * @author Kartik
  * Test suite for running all the JUnit together
+ * 
  */
 
 @RunWith(Suite.class)
