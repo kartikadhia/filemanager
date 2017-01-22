@@ -1,5 +1,3 @@
-# filemanager
-## project for getting details about files on a server
 ### Requirement:
 An application that helps manage .txt files on machine, by sending the details about files (size, word count, number)
 as a web service response.
@@ -11,22 +9,22 @@ repeated certain number of times need to be sent by the web service
 The files need to be categorized into long and short.
 >>>>>>> a1b066471b3eab5f278c766b6da11f4f404919bc
 The information should be accessible over the web, over a web service, and should be presented in the form of JSON, 
-so that applications written on any of the technologies, are be able to access this information.
-The application should be able to handle multiple request at the same time.
+so that applications written on any of the technologies, are able to access this information.
+The application should be able to handle multiple requests at the same time.
 
 ### Design:
 1. Since the output is supposed to be JSON, the obvious choice of the WebService is RESTful.
 	I've used Jersey Web Service API, to design the WebService, and Jersey Jackson support to help conversion of
-	the data objects into Json.
+	the data objects into JSON.
 2. The application can be fundamentally divided into three parts,
-..1. The WebService : That caters to requests from clients
-..2. The Service layer : That connects the WebService with the back-end.
-..3. The Back-end : Which does the processing of folders and files
+..*. The WebService : That caters to requests from clients
+..*. The Service layer : That connects the WebService with the back-end.
+..*. The Back-end : Which does the processing of folders and files
 3. The Back-End can be further divided into sub groups:
-.. 1. The Data Classes, which represent the data that will be sent over the web service.
-.. 2. The calculators that do the job of processing files/folders in the file system
-.. 3. Utility classes that support the calculators and connect with the services
-.. 4. Exceptions which represent the exceptions that could be thrown while processing
+..*. The Data Classes, which represent the data that will be sent over the web service.
+..*. The calculators that do the job of processing files/folders in the file system
+..*. Utility classes that support the calculators and connect with the services
+..*. Exceptions which represent the exceptions that could be thrown while processing
 4. In order to provide flexibility of configuration, the information about the file extension that needs to be 	checked, the threshold which decides if the file is long, the threshold which decides if the number is counted,
 	the flag to check hidden files and the flag to consider numbers as words are set in a properties file, which are
 	read with the help of a special class in the application
