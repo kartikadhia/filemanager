@@ -17,7 +17,7 @@ The application should be able to handle multiple requests at the same time.
 ..+. The WebService : That caters to requests from clients.
 ..+. The Service layer : That connects the WebService with the back-end.
 ..+. The Back-end : Which does the processing of folders and files.
-3. The Back-End can be further divided into sub groups:
+3. The Back-End can be further divided into sub groups
 ..+. The Data Classes, which represent the data that will be sent over the web service.
 ..+. The calculators that do the job of processing files/folders in the file system.
 ..+. Utility classes that support the calculators and connect with the services.
