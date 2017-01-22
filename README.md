@@ -1,10 +1,11 @@
 # filemanager
 ## project for getting details about files on a server
 ### Requirement:
-An application that helps manage .txt files on the server, specifically by counting the number, size
-and words in the file.
-The file need to be categorized into long and short, depending on the number of words. Also words that are
-repeated certain number of times 
+An application that helps manage .txt files on machine, by sending the details about files (size, word count, number)
+as a web service response.
+It also sends the words that occur more than certain number of times and also their counts.
+The files need to be categorized into long and short, depending on the number of words. Also words that are
+repeated certain number of times need to be sent by the web service
 The information should be accessible over the web, over a web service, and should be presented in the form of JSON, 
 so that applications written on any of the technologies, are be able to access this information.
 The application should be able to handle multiple request at the same time.
@@ -35,7 +36,7 @@ The application should be able to handle multiple request at the same time.
 	
 ### Features:
 1. The application is flexible in terms of configuration, and the thresholds can be changed in the configuration file.
-2. Also, Instead, if the user/developer wishes to send these attributes, he can do so by adding them to the query 	parameter intead.
+2. Also, Instead, if the user/developer wishes to send these attributes, he can do so by adding them to the query 	parameter instead.
 	If the user/developer decides to do so, the parameters that are sent are overridden by the default ones.
 	In case no parameters are sent, the default ones are used.
 3. If the process running the server is not able to access a particular path, the error message is sent via an 	additional parameter in the Web service output. This has been used in the client program to 
