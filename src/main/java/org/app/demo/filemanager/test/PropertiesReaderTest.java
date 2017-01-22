@@ -20,7 +20,7 @@ public class PropertiesReaderTest {
 	FolderManager folderManager = FolderManager.getFolderManager();
 	@Before
 	public void setUp() throws Exception {
-		propertiesReader = new PropertiesReader(folderManager);
+		propertiesReader = new PropertiesReader();
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class PropertiesReaderTest {
 	@Test
 	@Ignore
 	public void test() {
-		assertEquals("",folderManager.getFileExtention());
+		assertEquals("",folderManager.getFileExtension());
 		assertEquals(1000, folderManager.getThresholdForLongFile());
 		assertEquals(50, folderManager.getThresholdForWordRepetition());
 		assertEquals(true,folderManager.isCheckHidden());

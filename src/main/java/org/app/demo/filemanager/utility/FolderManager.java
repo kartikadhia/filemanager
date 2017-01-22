@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.app.demo.filemanager.calculator.FileProcessor;
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
+import org.app.demo.filemanager.exception.InvalidParameterException;
 
 
 /**
@@ -21,19 +22,18 @@ public class FolderManager {
 	
 	final static Logger logger = Logger.getLogger(FolderManager.class);
 	
-	private static String fileExtention;
+	private static String fileExtension;
 	private static int thresholdForLongFile;
 	private static int thresholdForWordRepetition;
 	private static boolean checkHidden;
 	private static boolean countNumbers;
 	
 	@SuppressWarnings("unused")
-	private  PropertiesReader propertiesReader;
+	private static PropertiesReader propertiesReader = new PropertiesReader();
 	private FileProcessor fileProcessor;
 	private static volatile FolderManager folderManager;
 	
 	private FolderManager () {
-		propertiesReader = new PropertiesReader();
 		fileProcessor = new FileProcessor();
 	}
 	
@@ -46,12 +46,12 @@ public class FolderManager {
 			}
 		return folderManager; 
 	}
-	public String getFileExtention() {
-		return fileExtention;
+	public String getFileExtension() {
+		return fileExtension;
 	}
 
-	public void setFileExtention(String fileExtention) {
-		FolderManager.fileExtention = fileExtention;
+	public void setFileExtension(String fileExtension) {
+		FolderManager.fileExtension = fileExtension;
 	}
 
 	public int getThresholdForLongFile() {
@@ -86,20 +86,49 @@ public class FolderManager {
 	 * @param path
 	 * @return
 	 * @throws InvalidOrEmptyPathException
+	 * @throws InvalidParameterException 
 	 */
 
-	public Directory processFilesForPath(String path) throws InvalidOrEmptyPathException {
-		
-		if(fileExtention == null) {
+	public Directory processFilesForPath(String path,  String fileExtensionFromParam, String checkHiddenFromParam, String thresholdForLongFileFromParam, 
+												String thresholdForWordRepetitionFromParam, String countNumbersFromParam) 
+														throws InvalidOrEmptyPathException, InvalidParameterException {
+		//If the params have not been loaded from the properties file,
+		//set default values
+		if(fileExtension == null) {
 			logger.info("Could not read the properties file, using default values");
-			fileExtention = ".txt";
+			fileExtension = ".txt";
 			thresholdForLongFile = 1000;
 			thresholdForWordRepetition = 50;
 			checkHidden = true;
 			countNumbers = true;
 		}
-		Directory directory =  fileProcessor.processFilesForPath(path,fileExtention
+		// if any of the param is passed to the webservice, set it as the passed value, else
+		//use the default value
+		if(fileExtensionFromParam != null) {
+			fileExtension = fileExtensionFromParam;
+		}
+		if(checkHiddenFromParam != null) {
+			checkHidden = Boolean.valueOf(checkHiddenFromParam);
+		}
+		if(countNumbersFromParam != null) {
+			countNumbers = Boolean.valueOf(countNumbersFromParam);
+		}
+		// if the input value for the threshold is not a number, throw an exception
+		try {
+			if(thresholdForLongFileFromParam != null) {
+				thresholdForLongFile = Integer.valueOf(thresholdForLongFileFromParam);
+			}
+			if(thresholdForWordRepetitionFromParam != null) {
+				thresholdForWordRepetition = Integer.valueOf(thresholdForWordRepetitionFromParam);
+			}
+		}
+		catch (NumberFormatException e) {
+			throw new InvalidParameterException("The input parameter for threshold is not a number.");
+		}
+		
+		Directory directory =  fileProcessor.processFilesForPath(path,fileExtension
 					,thresholdForLongFile,thresholdForWordRepetition,checkHidden,countNumbers);
+		
 		// if directory does not contain any files or relevant folders, return empty directory
 		if(directory == null) {
 			directory = fileProcessor.getEmptyDirectory(path);
@@ -108,11 +137,11 @@ public class FolderManager {
 		return directory;
 	}
 
-	public static boolean isCountNumbers() {
+	public boolean isCountNumbers() {
 		return countNumbers;
 	}
 
-	public static void setCountNumbers(boolean countNumbers) {
+	public void setCountNumbers(boolean countNumbers) {
 		FolderManager.countNumbers = countNumbers;
 	}
 

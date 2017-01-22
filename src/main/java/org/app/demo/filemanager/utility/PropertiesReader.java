@@ -18,14 +18,14 @@ import org.app.demo.filemanager.calculator.FileProcessor;
 public class PropertiesReader {
 	
 	final static Logger logger = Logger.getLogger(FileProcessor.class);
+	FolderManager folderManager = FolderManager.getFolderManager();
 	
 	private Properties properties = new Properties();
-	public PropertiesReader () {}
 	
-	public PropertiesReader(FolderManager folderManager) {
+	public PropertiesReader() {
 		try(InputStream input = this.getClass().getClassLoader().getResourceAsStream("config.properties");)	{
 			properties.load(input);
-			folderManager.setFileExtention(properties.getProperty("file_extention",".txt"));
+			folderManager.setFileExtension(properties.getProperty("file_extension",".txt"));
 			folderManager.setThresholdForLongFile(
 					Integer.valueOf(properties.getProperty("threshold_for_long_file","1000")));
 			folderManager.setThresholdForWordRepetition(

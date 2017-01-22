@@ -35,10 +35,13 @@ The application should be able to handle multiple request at the same time.
 	
 ### Features:
 1. The application is flexible in terms of configuration, and the thresholds can be changed in the configuration file.
-2. If the process running the server is not able to access a particular path, the error message is sent via an 	additional parameter in the Web service output. This has been used in the client program to 
+2. Also, Instead, if the user/developer wishes to send these attributes, he can do so by adding them to the query 	parameter intead.
+	If the user/developer decides to do so, the parameters that are sent are overridden by the default ones.
+	In case no parameters are sent, the default ones are used.
+3. If the process running the server is not able to access a particular path, the error message is sent via an 	additional parameter in the Web service output. This has been used in the client program to 
 	display appropriate messages. Also the search does not stop even if one unreachable folder is encountered!
-3. Quick response times, with better utilization of the CPU processing power in case of big files.
-4. If, instead of a folder path, the path of a file is sent to the Web Service, it will return a folder object
+4. Quick response times, with better utilization of the CPU processing power in case of big files.
+5. If, instead of a folder path, the path of a file is sent to the Web Service, it will return a folder object
 	consisting the details of this file.
 	
 ### Sample Output:

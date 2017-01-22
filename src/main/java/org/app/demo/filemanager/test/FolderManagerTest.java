@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
+import org.app.demo.filemanager.exception.InvalidParameterException;
 import org.app.demo.filemanager.utility.FolderManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,12 +41,13 @@ public class FolderManagerTest {
 	/**
 	 * Test if the properties are set if the file extension is null
 	 * @throws InvalidOrEmptyPathException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testProcessAllFilesWithPropertiesNotSet() throws InvalidOrEmptyPathException {
-		folderManager.setFileExtention(null);
-		folderManager.processFilesForPath(path);
-		assertEquals(".txt",folderManager.getFileExtention());
+	public void testProcessAllFilesWithPropertiesNotSet() throws InvalidOrEmptyPathException, InvalidParameterException {
+		folderManager.setFileExtension(null);
+		folderManager.processFilesForPath(path,null,null,null,null,null);
+		assertEquals(".txt",folderManager.getFileExtension());
 		assertEquals(1000,folderManager.getThresholdForLongFile());
 		assertEquals(50,folderManager.getThresholdForWordRepetition());
 		assertEquals(true,folderManager.isCheckHidden());
@@ -53,10 +55,11 @@ public class FolderManagerTest {
 	/**
 	 * Test if the method throws appropriate exception
 	 * @throws InvalidOrEmptyPathException
+	 * @throws InvalidParameterException 
 	 */
 	@Test(expected=InvalidOrEmptyPathException.class)
-	public void testProcessAllFilesWithInvalidPath() throws InvalidOrEmptyPathException {
-		folderManager.processFilesForPath(invalidPath);
+	public void testProcessAllFilesWithInvalidPath() throws InvalidOrEmptyPathException, InvalidParameterException {
+		folderManager.processFilesForPath(invalidPath,null,null,null,null,null);
 		fail("Did not throw the necessary exception");
 	}
 	/**
@@ -67,13 +70,13 @@ public class FolderManagerTest {
 		assertEquals(1000,folderManager.getThresholdForLongFile());
 		assertEquals(50,folderManager.getThresholdForWordRepetition());
 		assertEquals(true,folderManager.isCheckHidden());
-		assertEquals(".txt",folderManager.getFileExtention());
+		assertEquals(".txt",folderManager.getFileExtension());
 	}
 	
 	@Test
-	public void testIfEmptyDirectoryIsCorrectlyReturned() throws InvalidOrEmptyPathException {
+	public void testIfEmptyDirectoryIsCorrectlyReturned() throws InvalidOrEmptyPathException, InvalidParameterException {
 		path = "C:/Users/Kartik/Documents/java/testfolder/with no file";
-		Directory directory = folderManager.processFilesForPath(path);
+		Directory directory = folderManager.processFilesForPath(path,null,null,null,null,null);
 		assertEquals("with no file",directory.getName() );
 		assertEquals(0,directory.getDepth());
 		assertEquals(0,directory.getFileCount());
