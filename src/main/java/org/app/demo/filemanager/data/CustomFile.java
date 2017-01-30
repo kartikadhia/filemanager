@@ -8,8 +8,11 @@ package org.app.demo.filemanager.data;
   * This class is the bare bones structure for the file information that is sent on the web service.
  */
 import java.io.File;
+
 import java.io.Serializable;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,7 +29,7 @@ public class CustomFile implements Serializable{
 	private Directory parent;
 	private long size ;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private ConcurrentHashMap<String, Integer> wordCount = new ConcurrentHashMap<String, Integer>();
+	private Map<String, Long> wordCount = new HashMap<String, Long>();
 	private long totalWords;
 	private String errorString= "";
 	private String name;
@@ -48,11 +51,11 @@ public class CustomFile implements Serializable{
 		this.size = size;
 	}
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public ConcurrentHashMap<String, Integer> getWordCount() {
+	public Map<String, Long> getWordCount() {
 		return wordCount;
 	}
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public void setWordCount(ConcurrentHashMap<String, Integer> wordCount) {
+	public void setWordCount(Map<String, Long> wordCount) {
 		this.wordCount = wordCount;
 	}
 	

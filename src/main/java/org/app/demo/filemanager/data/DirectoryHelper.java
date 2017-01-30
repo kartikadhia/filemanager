@@ -1,10 +1,12 @@
 package org.app.demo.filemanager.data;
 
 import java.io.File;
-
+import java.util.List;
 import org.apache.log4j.Logger;
-import org.app.demo.filemanager.calculator.CustomFileThread;
+import org.app.demo.filemanager.calculator.CustomFileLambdaProcessor;
 import org.app.demo.filemanager.calculator.FileProcessor;
+
+
 
 /**
  *  @author Kartik
@@ -16,15 +18,11 @@ public class DirectoryHelper {
 	final static Logger logger = Logger.getLogger(FileProcessor.class);
 	
 	private Directory directory = new Directory();
-	private static String fileExtention;
-	private static boolean checkHidden;
+	public static String fileExtention;
+	public static boolean checkHidden;
 
 	
-	public DirectoryHelper(String name, int depth,String fileExtention,boolean checkHidden) {
-		directory.setName(name);
-		directory.setDepth(depth);
-		DirectoryHelper.fileExtention = fileExtention;
-		DirectoryHelper.checkHidden = checkHidden;
+	public DirectoryHelper() {
 	}
 	public DirectoryHelper(String name, int depth) {
 		directory.setName(name);
@@ -47,7 +45,7 @@ public class DirectoryHelper {
 	 * @param path to the folder
 	 * @return Directory containing details of the folder
 	 */
-	public Directory processAllChildren(String path) {
+	public Directory processAllChildren(String path,List<CustomFileLambdaProcessor> masterFileList) {
 		File thisFile = new File(path);
 		String [] children = thisFile.list();
 		for(String child : children) {
@@ -56,7 +54,7 @@ public class DirectoryHelper {
 					File childFile = new File(subPath);
 					if(childFile.isDirectory() && (checkHidden || !childFile.isHidden())) {
 						DirectoryHelper subDirectoryHelper = new DirectoryHelper(child,directory.getDepth()+1);
-						subDirectoryHelper.processAllChildren(subPath);
+						subDirectoryHelper.processAllChildren(subPath,masterFileList);
 						
 						// if subdirectory is relevant (not null) add it to the subdirectory list
 						if(subDirectoryHelper.getDirectory() != null) {
@@ -68,15 +66,17 @@ public class DirectoryHelper {
 					}
 					else if(childFile.isFile() && child.endsWith(fileExtention) &&(checkHidden || !childFile.isHidden())) {
 						CustomFile customFile = new CustomFile(childFile,child,directory);
-						CustomFileThread customFileThread = new CustomFileThread(customFile,
-																directory.getLongFilesList(),directory.getShortFilesList());
-						customFileThread.processFile();
+						CustomFileLambdaProcessor customFileLambdaProcessor = 
+								new CustomFileLambdaProcessor(customFile);
+						
+						// Instead of processing the file in the normal way, we will process it using Streams, for now, just add the file to a list. 
+						//customFileThread.processFile();
+						masterFileList.add(customFileLambdaProcessor);
+						customFile.setParent(directory);
 						// if the directory has files, set it as relevant (to be sent)
 						directory.setRelevant(true);
 						//increase the file count
 						directory.setFileCount((directory.getFileCount()+1));
-						// increase the word count
-						directory.setTotalWords(directory.getTotalWords() + customFile.getTotalWords());
 					}
 				}
 				catch(Exception e) {
@@ -92,7 +92,7 @@ public class DirectoryHelper {
 		for(Directory subDirectory : directory.getSubDirectoryList()) {
 			if(subDirectory == null) continue;
 			directory.setFileCount(directory.getFileCount() + subDirectory.getFileCount());
-			directory.setTotalWords(directory.getTotalWords()+subDirectory.getTotalWords());
+			
 			if(subDirectory.isRelevant()) {
 				directory.setRelevant(true);
 			}
@@ -101,9 +101,10 @@ public class DirectoryHelper {
 		//if the directory is not relevant, set it to null, so that it is not sent.
 		if(!directory.isRelevant()) {
 			directory = null;
-			}	
+			}
 		return directory;
 		
 	}
+
 
 }

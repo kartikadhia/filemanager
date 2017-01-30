@@ -1,10 +1,14 @@
 package org.app.demo.filemanager.calculator;
 
 import java.io.File;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.app.demo.filemanager.data.Directory;
 import org.app.demo.filemanager.data.DirectoryHelper;
 import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
+
 
 /**
  * 
@@ -13,13 +17,16 @@ import org.app.demo.filemanager.exception.InvalidOrEmptyPathException;
  * file structure and then process the file.
  * It also throws the InvalidOrEmptyPathException, in case the path is not a valid directory in the file system.
  * 
- *
  */
 
 public class FileProcessor {
 	final static Logger logger = Logger.getLogger(FileProcessor.class);
+	private List<CustomFileLambdaProcessor> masterFileList = new ArrayList <CustomFileLambdaProcessor> ();
+	
 	/**
-	 * 
+	 * This method  validates if the path is proper and then calls appropriate method to generate the 
+	 * file structure and then process the file.
+	 * It uses 
 	 * @param path to the folder
 	 * @param fileExtention The file extension that needs to be checked
 	 * @param thresholdForLongFile Decide when a file is classified as long
@@ -29,8 +36,8 @@ public class FileProcessor {
 	 * @throws InvalidOrEmptyPathException when the path is empty or null
 	 */
 	
-	public Directory processFilesForPath(String path, String fileExtention, int thresholdForLongFile,
-			int thresholdForWordRepetition, boolean checkHidden,boolean countNumbers) throws InvalidOrEmptyPathException {
+	public Directory processFilesForPath(String path, String fileExtention, boolean checkHidden,boolean countNumbers,
+									int thresholdForLongFile,int thresholdForWordRepetition) throws InvalidOrEmptyPathException {
 		// check if the original path is a valid directory, if not throw an exception
 		File file;
 		String name;
@@ -48,15 +55,14 @@ public class FileProcessor {
 		if(!((file).isDirectory())) {
 			// if the path is a valid file, remove filename from the path details about this file and send the root folder:
 			if(file.isFile())  {
-				System.out.println("file detected");
+
 				 String fileName = path.substring(path.lastIndexOf('/')+1, path.length());
-				 System.out.println("file name = " + fileName);
+
 				 if(fileName.endsWith(fileExtention)) {
-					 System.out.println("truncating path " + path);
 					 path = path.substring(0,path.lastIndexOf('/'));
-					 System.out.println("truncated path " + path);
-					 return processFilesForPath(path,fileExtention,thresholdForLongFile
-							 					,thresholdForWordRepetition,checkHidden,countNumbers);
+		
+					 return processFilesForPath(path,fileExtention,checkHidden, countNumbers,
+								 thresholdForLongFile, thresholdForWordRepetition);
 				 }
 				 else
 				 throw new InvalidOrEmptyPathException("Input path is not file that matches the extension to be checked");	 
@@ -69,14 +75,33 @@ public class FileProcessor {
 		//get the name of root directory
 		name = path.substring(path.lastIndexOf('/')+1, path.length());
 		//call to the constructor, to set the static values of the class
-		@SuppressWarnings("unused")
-		CustomFileThread customFileThread = new CustomFileThread(thresholdForLongFile,thresholdForWordRepetition,countNumbers);
 		
-		DirectoryHelper parentDirectoryHelper = new DirectoryHelper(name,0,fileExtention,checkHidden);
-		Directory parent = parentDirectoryHelper.processAllChildren(path);
+		DirectoryHelper parentDirectoryHelper = new DirectoryHelper();
+		parentDirectoryHelper.getDirectory().setName(name);
+		parentDirectoryHelper.getDirectory().setDepth(0);
+		DirectoryHelper.fileExtention = fileExtention;
+		DirectoryHelper.checkHidden = checkHidden;
+		Directory parent = parentDirectoryHelper.processAllChildren(path,masterFileList);
+		
 
+		LambdaFileProcessor lambdaFileProcessor = new LambdaFileProcessor();
+		CustomFileLambdaProcessor.thresholdForLongFile = thresholdForLongFile;
+		CustomFileLambdaProcessor.thresholdForWordRepetition = thresholdForWordRepetition;
+		CustomFileLambdaProcessor.countNumbers = countNumbers;
+		masterFileList.parallelStream().forEach((customFileLambdaProcessor) -> {
+				try	{
+					 lambdaFileProcessor.processFile(customFileLambdaProcessor);
+				}
+				catch (Exception e) {
+					customFileLambdaProcessor.getCustomFile().setErrorString("Exception occured while  parallely processing"
+							+ " this file");
+					logger.error("Exception while parallely processing files in class FileProcessor" + e.getStackTrace());
+				}
+		});
 		return parent;
+		
 	}
+	
 	/**
 	 * returns an empty directory, in case the path is a valid root folder but it does not contain any files
 	 * or relevant sub folders.

@@ -33,7 +33,6 @@ public class Directory implements Serializable {
 	private int fileCount = 0;
 	private String errorString = "";
 	private String name;
-	private long totalWords;
 
 	public Directory () {
 	}
@@ -108,13 +107,6 @@ public class Directory implements Serializable {
 		this.fileCount = fileCount;
 	}
 
-	public long getTotalWords() {
-		return totalWords;
-	}
-
-	public void setTotalWords(long totalWords) {
-		this.totalWords = totalWords;
-	}
 	
 
 }

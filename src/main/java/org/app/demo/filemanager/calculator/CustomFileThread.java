@@ -19,7 +19,9 @@ import org.apache.log4j.Logger;
 import org.app.demo.filemanager.data.CustomFile;
 
 
-/**
+
+
+/** 
  *  @author Kartik
  *  This class processes the relevant files by using multiple threads to process the file parallely
  *  the buffered reader reads the file and inserts the lines into a ArrayBlockingQueue
@@ -29,7 +31,7 @@ import org.app.demo.filemanager.data.CustomFile;
  *  count of its words.
  *  
  */
-
+@Deprecated // this job is now done by CUstomeFileLambdaProcessor
 public class CustomFileThread implements Callable <Long> {
 	
 	final static Logger logger = Logger.getLogger(CustomFileThread.class);
@@ -40,9 +42,9 @@ public class CustomFileThread implements Callable <Long> {
 	private static boolean countNumbers;
 	private List<CustomFile> parentLongFilesList;
 	private List<CustomFile> parentShortFilesList;
-	private int totalWords = 0;
+	private long totalWords = 0;
 	private ArrayBlockingQueue  <String> setOfLines = new ArrayBlockingQueue  <String> (10);
-	private ConcurrentHashMap <String, Integer> wordCount ;
+	private ConcurrentHashMap <String, Long> wordCount ;
 	public  CustomFileThread() {
 		
 	}
@@ -53,10 +55,11 @@ public class CustomFileThread implements Callable <Long> {
 		CustomFileThread.countNumbers = countNumbers;
 	}
 	public CustomFileThread(CustomFile customFile,List<CustomFile> parentLongFilesList,
-									List<CustomFile> parentShortFilesList) {
+									List<CustomFile> parentShortFilesList,ConcurrentHashMap<String, Long> wordCount) {
 		this.customFile = customFile;
 		this.parentLongFilesList= parentLongFilesList;
 		this.parentShortFilesList = parentShortFilesList;
+		this.wordCount = wordCount;
 	}
 	/**
 	 * Processes the file by dividing it into lines and then adding them to a ArrayBlockingQueue
@@ -67,7 +70,9 @@ public class CustomFileThread implements Callable <Long> {
 		//process word count here
 		long startTime = System.currentTimeMillis();
 		String line;
-		wordCount = customFile.getWordCount();
+		
+		//wordCount = customFile.getWordCount(); Set in constructer instead
+		
 		List<Future<Long>> listOfFutures = new ArrayList<Future<Long>>();
 		// Choose the executor and the number of threads that best suits the processor and purpose
 		// work stealing pool took about 875 ms, cached threadpool too about 1100 ms
@@ -154,7 +159,7 @@ public class CustomFileThread implements Callable <Long> {
 						wordCount.put(word, (wordCount.get(word)+1));
 					}
 					else {
-						wordCount.put(word, 1);
+						wordCount.put(word, (long) 1);
 					}
 			}
 			}	

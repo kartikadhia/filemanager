@@ -32,9 +32,7 @@ public class FolderManager {
 	private static PropertiesReader propertiesReader = new PropertiesReader();
 	private FileProcessor fileProcessor;
 	private static volatile FolderManager folderManager;
-	
 	private FolderManager () {
-		fileProcessor = new FileProcessor();
 	}
 	
 	public static FolderManager getFolderManager() {
@@ -125,9 +123,9 @@ public class FolderManager {
 		catch (NumberFormatException e) {
 			throw new InvalidParameterException("The input parameter for threshold is not a number.");
 		}
-		
-		Directory directory =  fileProcessor.processFilesForPath(path,fileExtension
-					,thresholdForLongFile,thresholdForWordRepetition,checkHidden,countNumbers);
+		fileProcessor = new FileProcessor();
+		Directory directory =  fileProcessor.processFilesForPath(path,fileExtension,checkHidden,countNumbers
+					,thresholdForLongFile,thresholdForWordRepetition);
 		
 		// if directory does not contain any files or relevant folders, return empty directory
 		if(directory == null) {
@@ -145,7 +143,7 @@ public class FolderManager {
 		FolderManager.countNumbers = countNumbers;
 	}
 
-
+	
 
 
 }

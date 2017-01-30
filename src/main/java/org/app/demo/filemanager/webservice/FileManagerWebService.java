@@ -55,11 +55,11 @@ public class FileManagerWebService {
 			long startTime = System.currentTimeMillis();
 			
 			
-			logger.info("Received request for path " + path + "with params" +
-							"fileExtension = " + fileExtension + 
-							"checkHidden = " + checkHidden +
-							"thresholdForLongFile = " + thresholdForLongFile+
-							"thresholdForWordRepetition = " + thresholdForWordRepetition + 
+			logger.info("Received request for path " + path + "with params " +
+							"fileExtension = " + fileExtension + " " +  
+							"checkHidden = " + checkHidden +  " " +  
+							"thresholdForLongFile = " + thresholdForLongFile+  " " +  
+							"thresholdForWordRepetition = " + thresholdForWordRepetition +  " " +  
 							"countNumbers = " + countNumbers);
 			
 			Directory directory =   fileManagerService.getFilesAtPath(path,fileExtension,checkHidden,thresholdForLongFile,thresholdForWordRepetition,countNumbers);
