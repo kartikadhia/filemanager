@@ -15,7 +15,7 @@ public class InvalidParameterException extends Exception {
 	}
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Invalid Parameters received" + super.toString();
 	}
 
 }

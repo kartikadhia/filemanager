@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * relevant to our case.
  * Each folder will have a parent folder (except for the root folder)
  */
-@JsonPropertyOrder({"name", "depth","totalWords","fileCount","longFilesList","shortFilesList","subDirectoryList","errorString"})
+@JsonPropertyOrder({"name", "depth","fileCount","longFilesList","shortFilesList","subDirectoryList","errorString"})
 public class Directory implements Serializable {
 	@JsonIgnore
 	private static final long serialVersionUID = -1569540135638641823L;

@@ -14,7 +14,7 @@ public class InvalidOrEmptyPathException extends Exception {
 	}
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Invalid or empty path receiveed" +  super.toString();
 	}
 
 }
