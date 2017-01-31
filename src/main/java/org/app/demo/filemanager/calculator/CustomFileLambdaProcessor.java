@@ -13,22 +13,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.log4j.Logger;
 import org.app.demo.filemanager.data.CustomFile;
 
+/**
+ *  @author Kartik
+ *  This class processes the relevant files by using multiple threads to process the file parallely
+ *  the buffered reader reads the file and inserts the lines into a ArrayBlockingQueue
+ *  (producer consumer pattern)
+ *  The threads then pick up these lines from the queue and process them to check for their words.
+ *  finally, the final word count is calculated and also the file is classified as long or short, depending on the
+ *  count of its words.
+ *  
+ */
 
 public class CustomFileLambdaProcessor {
 
-
-
-
-	/**
-	 *  @author Kartik
-	 *  This class processes the relevant files by using multiple threads to process the file parallely
-	 *  the buffered reader reads the file and inserts the lines into a ArrayBlockingQueue
-	 *  (producer consumer pattern)
-	 *  The threads then pick up these lines from the queue and process them to check for their words.
-	 *  finally, the final word count is calculated and also the file is classified as long or short, depending on the
-	 *  count of its words.
-	 *  
-	 */
 		final static Logger logger = Logger.getLogger(CustomFileLambdaProcessor.class);
 		
 		public static int thresholdForLongFile;
