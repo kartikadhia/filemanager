@@ -8,8 +8,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
+
 import org.apache.log4j.Logger;
 import org.app.demo.filemanager.data.CustomFile;
 
@@ -34,7 +38,7 @@ public class CustomFileLambdaProcessor {
 		private CustomFile customFile;
 		
 		private volatile long totalWords = 0;
-		private volatile ConcurrentHashMap <String, Long> wordCount = new  ConcurrentHashMap <String, Long> ();
+		private volatile Map <Object, Long> wordCount = new  HashMap <Object, Long> ();
 	
 		public  CustomFileLambdaProcessor() {
 			
@@ -61,7 +65,7 @@ public class CustomFileLambdaProcessor {
 		public void processFile() {
 			long startTime = System.currentTimeMillis();
 			try {
-				
+				wordCount = 
 				 Files.lines(
 						Paths.get(customFile.getFile().getAbsolutePath()),StandardCharsets.ISO_8859_1)
 				.map(thisLine -> thisLine.replaceAll("\\s"," ").split(" "))
@@ -69,30 +73,32 @@ public class CustomFileLambdaProcessor {
 				.filter(s -> !s.isEmpty()&& s.trim() != "")
 				.map(String::toLowerCase)
 				.map(s -> removeSpecialCharacters(s))
-				.forEachOrdered(s -> {
-					String word = s + "";
-					if(wordCount.containsKey(word)) {
-						wordCount.put(word, (wordCount.get(word)+1));
-					}
-					else {
-						wordCount.put(word, (long) 1);
-					}
-				});
+				//wrongly used earlier, correction //FIXME
+				.collect(Collectors.toMap(p->p,  w -> (long)1, Long::sum));
 				
 			} catch (IOException e) {
 				customFile.setErrorString("There was an error accessing this file, the word count may not be accurate");
 				e.printStackTrace();
 			}
-			 
+			
+			System.out.println("word count before" + wordCount);
+			//wrongly used earlier, correction
+			totalWords =
+			wordCount
+			.entrySet()
+			.stream()
+			.mapToLong(s-> s.getValue())
+			.sum();
+					
+			System.out.println("word count " + wordCount);
+			System.out.println("wordCount.get(0) " + wordCount.get(0));
+			System.out.println("totalWords =  " + totalWords);
+			//wrongly used earlier, correction
 			
 			Map <String, Long> temp = 
 			wordCount.entrySet().parallelStream()
-			.filter(s -> {
-				synchronized (this) {
-					totalWords = totalWords + s.getValue();
-				}
-				return s.getValue()>thresholdForWordRepetition;})
-			.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+			.filter(s -> s.getValue()>thresholdForWordRepetition)
+			.collect(Collectors.toMap(e -> e.toString(),e -> e.getValue()));
 			 
 			 customFile.setTotalWords(totalWords);
 			 if(totalWords>thresholdForLongFile) {
@@ -107,7 +113,7 @@ public class CustomFileLambdaProcessor {
 			 logger.debug("processed file "+ customFile.getName() + " in " + elapsedTime + "ms");
 			
 		}
-		private Object removeSpecialCharacters(String word) {
+		private String removeSpecialCharacters(String word) {
 			char [] wordArray = word.toCharArray();
 			int i;
 			char c;
