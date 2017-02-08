@@ -81,7 +81,6 @@ public class CustomFileLambdaProcessor {
 				e.printStackTrace();
 			}
 			
-			System.out.println("word count before" + wordCount);
 			//wrongly used earlier, correction
 			totalWords =
 			wordCount
@@ -89,10 +88,6 @@ public class CustomFileLambdaProcessor {
 			.stream()
 			.mapToLong(s-> s.getValue())
 			.sum();
-					
-			System.out.println("word count " + wordCount);
-			System.out.println("wordCount.get(0) " + wordCount.get(0));
-			System.out.println("totalWords =  " + totalWords);
 			//wrongly used earlier, correction
 			
 			Map <String, Long> temp = 
