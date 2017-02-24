@@ -2,20 +2,23 @@ package org.app.demo.filemanager.calculator;
 
 
 
-import java.util.stream.Collectors;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.app.demo.filemanager.data.CustomFile;
+
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 /**
  *  @author Kartik
@@ -38,7 +41,7 @@ public class CustomFileLambdaProcessor {
 		private CustomFile customFile;
 		
 		private volatile long totalWords = 0;
-		private volatile Map <Object, Long> wordCount = new  HashMap <Object, Long> ();
+		private volatile Map <String, Long> wordCount = new  HashMap <String, Long> ();
 	
 		public  CustomFileLambdaProcessor() {
 			
@@ -73,22 +76,25 @@ public class CustomFileLambdaProcessor {
 				.filter(s -> !s.isEmpty()&& s.trim() != "")
 				.map(String::toLowerCase)
 				.map(s -> removeSpecialCharacters(s))
-				//wrongly used earlier, correction //FIXME
-				.collect(Collectors.toMap(p->p,  w -> (long)1, Long::sum));
+		
+				//.forEach(p -> System.out.println(p.getClass()));
+				//.collect(Collectors.toMap(Function.identity(), str-> Collections.frequency(input, str)));
+				//.collect(groupingBy(Function.identity(), Collectors.counting()));
+				.collect(Collectors.toMap(p->p,  p -> (long)1, Long::sum));
 				
 			} catch (IOException e) {
 				customFile.setErrorString("There was an error accessing this file, the word count may not be accurate");
 				e.printStackTrace();
 			}
 			
-			//wrongly used earlier, correction
+			
 			totalWords =
 			wordCount
 			.entrySet()
 			.stream()
 			.mapToLong(s-> s.getValue())
 			.sum();
-			//wrongly used earlier, correction
+
 			
 			Map <String, Long> temp = 
 			wordCount.entrySet().parallelStream()
