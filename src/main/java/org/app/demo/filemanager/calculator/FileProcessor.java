@@ -2,6 +2,7 @@ package org.app.demo.filemanager.calculator;
 
 import java.io.File;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -79,8 +80,8 @@ public class FileProcessor {
 		DirectoryHelper parentDirectoryHelper = new DirectoryHelper();
 		parentDirectoryHelper.getDirectory().setName(name);
 		parentDirectoryHelper.getDirectory().setDepth(0);
-		DirectoryHelper.fileExtention = fileExtention;
-		DirectoryHelper.checkHidden = checkHidden;
+		parentDirectoryHelper.fileExtention = fileExtention;
+		parentDirectoryHelper.checkHidden = checkHidden;
 		Directory parent = parentDirectoryHelper.processAllChildren(path,masterFileList);
 		
 

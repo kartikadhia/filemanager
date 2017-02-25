@@ -18,8 +18,8 @@ public class DirectoryHelper {
 	final static Logger logger = Logger.getLogger(FileProcessor.class);
 	
 	private Directory directory = new Directory();
-	public static String fileExtention;
-	public static boolean checkHidden;
+	public String fileExtention;
+	public boolean checkHidden;
 
 	
 	public DirectoryHelper() {
