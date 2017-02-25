@@ -1,4 +1,4 @@
-# filemanager
+# filemanager : please refer the branch for java 8 code with streams
 ## project for getting details about files on a server
 ### Requirement:
 An application that helps manage .txt files on machine, by sending the details about files (size, word count, number)
