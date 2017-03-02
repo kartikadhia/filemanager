@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.calculator;
 
 import static org.junit.Assert.*;
 

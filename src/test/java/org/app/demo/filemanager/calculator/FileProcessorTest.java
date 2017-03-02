@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.calculator;
 
 import static org.junit.Assert.*;
 import org.app.demo.filemanager.calculator.FileProcessor;
@@ -9,9 +9,9 @@ import org.junit.Before;
 
 import org.junit.Test;
 /**
- * Tester class for class FileProcessor
+ * TDD Tester class for class FileProcessor
  * @author Kartik
- *
+ * updated for java 8
  */
 
 public class FileProcessorTest {
@@ -35,16 +35,14 @@ public class FileProcessorTest {
 	@Test
 	public void testForNormalPath() throws InvalidOrEmptyPathException {
 		directory =  fileProcessor.processFilesForPath(path,".txt",1000,50,true,true);
-		assertEquals(5, directory.getFileCount());
+		assertEquals(3, directory.getFileCount());
 		assertEquals(0, directory.getDepth());
-		System.out.println(directory.getName());
-		assertEquals(true, directory.isRelevant());
 		assertEquals("folder level 1",directory.getSubDirectoryList().get(0).getName());
 		assertEquals(true,directory.getSubDirectoryList().get(0).isRelevant());
 		//check if the directory of the child is the directory itself
 		assertEquals(directory, directory.getSubDirectoryList().get(0).getParentDirectory());
 		assertEquals(1,directory.getSubDirectoryList().size());
-		assertEquals(2965,directory.getTotalWords());
+		
 		assertEquals(1,directory.getSubDirectoryList().get(0).getDepth());
 		assertEquals("",directory.getErrorString());
 	}
@@ -52,15 +50,15 @@ public class FileProcessorTest {
 	@Test(expected=InvalidOrEmptyPathException.class)
 	public void testWrongPath() throws InvalidOrEmptyPathException  {
 	
-			directory =  fileProcessor.processFilesForPath(invalidPath,".txt"
-					,1000,50,true,true);
+			directory =  fileProcessor.processFilesForPath(invalidPath,".txt",1000,50,true,true)
+					;
 		    fail( "did not throw expected exception" );
 
 	}
 	@Test(expected=InvalidOrEmptyPathException.class)
 	public void testEmptyPath() throws InvalidOrEmptyPathException  {
-			directory =  fileProcessor.processFilesForPath("",".txt"
-					,1000,50,true,true);
+			directory =  fileProcessor.processFilesForPath("",".txt",1000,50,true,true);
+					
 		    fail( "did not throw expected exception" );
 
 	}
