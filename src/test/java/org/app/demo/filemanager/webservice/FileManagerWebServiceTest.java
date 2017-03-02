@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.webservice;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 /**
- * Tester class for class FileManagerWebService
+ * TDD Tester class for class FileManagerWebService
  * @author Kartik
  *
  */

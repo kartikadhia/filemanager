@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.utility;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * TDD testing class
  * @author Kartik
  * Test behavior of FolderManager Class
  */

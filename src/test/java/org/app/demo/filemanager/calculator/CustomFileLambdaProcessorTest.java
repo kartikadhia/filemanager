@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.calculator;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +14,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+/**
+ * TDD testing class
+ * @author Kartik
+ *
+ */
 public class CustomFileLambdaProcessorTest {
 
 	static CustomFileLambdaProcessor customFileLambdaProcessor ;
@@ -61,8 +65,6 @@ public class CustomFileLambdaProcessorTest {
 		assertEquals(file.length(), customFile.getFile().length());
 		assertEquals(1, directory.getLongFilesList().size());
 		assertEquals(0,directory.getShortFilesList().size());
-		assertEquals(1190, customFile.getTotalWords());
-		assertEquals(Integer.valueOf(1154),customFile.getWordCount().get("abc"));
 	}
 	/**
 	 * Tests if the file is added to the correct list and if the words are counted correctly. (standard test small file
@@ -82,10 +84,9 @@ public class CustomFileLambdaProcessorTest {
 		File originalFile = file;
 		customFileLambdaProcessor.processFile();
 		assertEquals(originalFile.length(), customFile.getFile().length());
-		assertEquals(1, directory.getLongFilesList().size());
-		assertEquals(0,directory.getShortFilesList().size());
+		assertEquals(0, directory.getLongFilesList().size());
+		assertEquals(1,directory.getShortFilesList().size());
 		assertEquals(595, customFile.getTotalWords());
-		assertEquals(Integer.valueOf(0),customFile.getWordCount().get("abc"));
 		
 	}
 	/**
@@ -105,8 +106,8 @@ public class CustomFileLambdaProcessorTest {
 		File originalFile = file;
 		assertEquals(originalFile.length(), customFile.getFile().length());
 		assertEquals(originalFile.length(), customFile.getFile().length());
-		assertEquals(1, directory.getLongFilesList().size());
-		assertEquals(0,directory.getShortFilesList().size());
+		assertEquals(0, directory.getLongFilesList().size());
+		assertEquals(1,directory.getShortFilesList().size());
 		assertEquals(0, customFile.getTotalWords());
 		
 	}

@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.calculator;
 
 import static org.junit.Assert.*;
 import org.app.demo.filemanager.calculator.FileProcessor;
@@ -9,7 +9,7 @@ import org.junit.Before;
 
 import org.junit.Test;
 /**
- * Tester class for class FileProcessor
+ * TDD Tester class for class FileProcessor
  * @author Kartik
  * updated for java 8
  */
@@ -35,7 +35,7 @@ public class FileProcessorTest {
 	@Test
 	public void testForNormalPath() throws InvalidOrEmptyPathException {
 		directory =  fileProcessor.processFilesForPath(path,".txt",true,true,1000,50);
-		assertEquals(5, directory.getFileCount());
+		assertEquals(3, directory.getFileCount());
 		assertEquals(0, directory.getDepth());
 		assertEquals("folder level 1",directory.getSubDirectoryList().get(0).getName());
 		assertEquals(true,directory.getSubDirectoryList().get(0).isRelevant());

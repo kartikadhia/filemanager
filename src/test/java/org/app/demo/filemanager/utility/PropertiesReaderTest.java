@@ -1,4 +1,4 @@
-package org.app.demo.filemanager.test;
+package org.app.demo.filemanager.utility;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 /**
- * Tester class for class PropertiesReader
+ * TDD Tester class for class PropertiesReader
  * @author Kartik
  *
  */
